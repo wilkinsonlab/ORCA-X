@@ -1,0 +1,205 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix orca: <http://vocab.deri.ie/orca#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix orca-x: <http://w3id.org/orca-x#> .
+
+<http://vocab.deri.ie/orca> a owl:Ontology, adms:SemanticAsset;
+    dcterms:title "orca, the Ontology of Reasoning, Certainty and Attribution";
+    dcterms:description "orca, the Ontology of Reasoning, Certainty and Attribution, is an ontology for characterizing the certainty of information, how it is known, and its source";
+    dcterms:modified "2012-11-09"^^xsd:date;
+    vann:preferredNamespaceUri "http://vocab.deri.ie/orca#";
+    vann:preferredNamespacePrefix "orca";
+    foaf:homepage <http://vocab.deri.ie/orca.html>;
+    dcterms:created "2012-07-19"^^xsd:date;
+    dcterms:partOf <http://vocab.deri.ie>;
+    dcterms:type <http://purl.org/adms/assettype/Ontology>;
+    dcterms:status <http://purl.org/adms/status/UnderDevelopment>;
+    dc:creator
+        orca:ahogan,
+        <http://vocab.deri.ie/orca#Jodi%20Schneider> .
+
+orca:ttl a adms:SemanticDistribution;
+    dcterms:FileFormat <>;
+    adms:accessURL "http://vocab.deri.ie/orca.ttl";
+    adms:status <http://purl.org/adms/status/Completed> .
+
+orca:rdf a adms:SemanticDistribution;
+    dcterms:FileFormat <>;
+    adms:accessURL "http://vocab.deri.ie/orca.rdf";
+    adms:status <http://purl.org/adms/status/Completed> .
+
+orca:ahogan a foaf:Person;
+    foaf:name "Aidan Hogan";
+    foaf:homepage <> .
+
+<http://vocab.deri.ie/orca#Jodi%20Schneider> a foaf:Person;
+    foaf:name "Jodi Schneider";
+    foaf:homepage <>;
+    foaf:mbox <mailto:jodi.schneider@deri.org> .
+
+orca:DERI a dcterms:Agent;
+    foaf:member <http://vocab.deri.ie/orca#Jodi%20Schneider>;
+    foaf:name "DERI";
+    foaf:homepage <> .
+
+orca:Basis a rdfs:Class, owl:Class;
+    rdfs:label "Basis";
+    rdfs:comment "Indicates the basis of the knowledge" .
+
+orca:Source a rdfs:Class, owl:Class;
+    rdfs:label "Source";
+    rdfs:comment "Indicates the source of the knowledge" .
+
+orca:ConfidenceLevel a rdfs:Class, owl:Class;
+    rdfs:label "ConfidenceLevel";
+    rdfs:comment "Indicates how certain the knowledge is" .
+
+orca:hasSource a rdf:Property;
+    rdfs:label "hasSource";
+    rdfs:comment "Indicates the source of the knowledge.";
+    rdfs:range orca:Source .
+
+orca:lessCertain a rdf:Property;
+    rdfs:label "lessCertain" .
+
+orca:directlyLessCertainThan a rdf:Property;
+    rdfs:label "directlyLessCertainThan";
+    rdfs:subPropertyOf orca:lessCertain .
+
+orca:moreCertain a rdf:Property;
+    rdfs:label "moreCertain" .
+
+orca:hasConfidenceLevel a rdf:Property;
+    rdfs:label "hasConfidenceLevel";
+    rdfs:comment "Indicates the confidence/certainty level of the knowledge.";
+    rdfs:range orca:ConfidenceLevel .
+
+orca:directlyMoreCertainThan a rdf:Property;
+    rdfs:label "directlyMoreCertainThan";
+    rdfs:subPropertyOf orca:moreCertain .
+
+orca:hasBasis a rdf:Property;
+    rdfs:label "hasBasis";
+    rdfs:comment "Indicates the basis of the knowledge.";
+    rdfs:range orca:Basis .
+
+
+
+
+orca:LackOfKnowledge a orca:ConfidenceLevel;
+    rdfs:label "lack of knowledge"@en;
+    rdfs:comment "Indicates lack of knowledge."@en;
+    orca:directlyLessCertainThan orca:HypotheticalKnowledge .
+
+orca-x:LackOfKnowledge a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "lack of knowledge"@en ;
+    rdfs:comment "Indicates lack of knowledge."@en ;
+    orca:directlyLessCertainThan orca:HypotheticalKnowledge .
+
+orca-x:CategoryD a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "similar to lack of knowledge"@en ;
+    rdfs:comment "From the Prieto & Wilkinson Confidence Survey."@en .
+
+
+
+
+orca:HypotheticalKnowledge a orca:ConfidenceLevel;
+    rdfs:label "hypothetical knowledge: low certainty"@en;
+    rdfs:comment "Indicates hypothetical knowledge: low certainty."@en;
+    orca:directlyMoreCertainThan orca:LackOfKnowledge;
+    orca:directlyLessCertainThan orca:DubitativeKnowledge .
+
+orca-x:HypotheticalKnowledge a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "hypothetical knowledge: low certainty"@en;
+    rdfs:comment "Indicates hypothetical knowledge: low certainty."@en;
+    orca:directlyMoreCertainThan orca:LackOfKnowledge;
+    orca:directlyLessCertainThan orca:DubitativeKnowledge .
+
+orca-x:CategoryC a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "similar to hypothetical knowledge"@en;
+    rdfs:comment "From the Prieto & Wilkinson Confidence Survey."@en .
+
+
+
+orca:DubitativeKnowledge a orca:ConfidenceLevel;
+    rdfs:label "dubitative knowledge: higher likelihood but short of complete certainty"@en;
+    rdfs:comment "Indicates dubitative knowledge: higher likelihood but short of complete certainty."@en;
+    orca:directlyMoreCertainThan orca:HypotheticalKnowledge;
+    orca:directlyLessCertainThan orca:DoxasticKnowledge .
+	
+orca-x:DubitativeKnowledge a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "dubitative knowledge: higher likelihood but short of complete certainty"@en;
+    rdfs:comment "Indicates dubitative knowledge: higher likelihood but short of complete certainty."@en;
+    orca:directlyMoreCertainThan orca:LackOfKnowledge;
+    orca:directlyLessCertainThan orca:DubitativeKnowledge .
+
+orca-x:CategoryB a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "similar to dubitative knowledge:"@en;
+    rdfs:comment "From the Prieto & Wilkinson Confidence Survey."@en .
+
+	
+	
+
+orca:DoxasticKnowledge a orca:ConfidenceLevel;
+    rdfs:label "doxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact"@en ;
+    rdfs:comment "Indicates duoxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact."@en;
+    orca:directlyMoreCertainThan orca:DubitativeKnowledge .
+
+orca-x:DoxasticKnowledge a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "doxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact"@en ;
+    rdfs:comment "Indicates duoxastic knowledge: complete certainty, reflecting an accepted, known and/or proven fact."@en;
+    orca:directlyMoreCertainThan orca:LackOfKnowledge;
+    orca:directlyLessCertainThan orca:DubitativeKnowledge .
+
+orca-x:CategoryA a rdfs:Class, owl:Class;
+    rdfs:subClassOf orca:ConfidenceLevel ;
+    rdfs:label "similar to doxastic knowledge:"@en;
+    rdfs:comment "From the Prieto & Wilkinson Confidence Survey."@en .
+
+
+
+orca:Reasoning a orca:Basis;
+    rdfs:label "reasoning"@en;
+    rdfs:comment "Indicates knowledge known by reasoning."@en .
+
+orca:Data a orca:Basis;
+    rdfs:label "data"@en;
+    rdfs:comment "Indicates knowledge known by data."@en .
+
+orca:Unidentified a orca:Basis;
+    rdfs:label "unidentified"@en;
+    rdfs:comment "Indicates knowledge whose basis is unidentified."@en .
+
+orca:AuthorExplicitly a orca:Source;
+    rdfs:label "author, explicitly"@en;
+    rdfs:comment "Indicates knowledge explicitly attributed to the author."@en .
+
+orca:AuthorImplicitly a orca:Source;
+    rdfs:label "author, implicitly"@en;
+    rdfs:comment "Indicates knowledge implicitly attributed to the author."@en .
+
+orca:NamedExternalSource a orca:Source;
+    rdfs:label "named external source"@en;
+    rdfs:comment "Indicates knowledge attributed to a named external source (either explicitly or as a reference)."@en .
+
+orca:NamelessExternalSource a orca:Source;
+    rdfs:label "nameless external source"@en;
+    rdfs:comment "Indicates knowledge attributed to a nameless external source."@en .
+
+orca:NoSource a orca:Source;
+    rdfs:label "no source"@en;
+    rdfs:comment "Indicates knowledge not attributed to any source."@en .

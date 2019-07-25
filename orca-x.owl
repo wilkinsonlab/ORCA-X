@@ -90,8 +90,9 @@ orca:hasBasis a rdf:Property;
     rdfs:comment "Indicates the basis of the knowledge.";
     rdfs:range orca:Basis .
 
-
-
+orca:asserts a rdf:Property;
+    rdfs:label "asserts";
+    rdfs:comment "A relation between a text entity and an assertion made within that text.".
 
 orca:LackOfKnowledge a orca:ConfidenceLevel;
     rdfs:label "lack of knowledge"@en;
